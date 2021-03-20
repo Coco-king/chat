@@ -1,5 +1,6 @@
 package top.codecrab.chat.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import top.codecrab.chat.bo.LoginUser;
 import top.codecrab.chat.common.Result;
 import top.codecrab.chat.entity.User;
@@ -16,7 +17,11 @@ import top.codecrab.chat.vo.AccountProfile;
  */
 public interface UserService extends IService<User> {
 
-    Result register(AccountProfile profile);
+    Result register(LoginUser loginUser);
 
     Result login(LoginUser loginUser);
+
+    Result upload(MultipartFile file, String userid);
+
+    Result updateNickname(AccountProfile profile);
 }

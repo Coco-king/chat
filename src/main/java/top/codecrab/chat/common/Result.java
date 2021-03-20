@@ -21,6 +21,10 @@ public class Result {
         return new Result(true, "操作成功", data);
     }
 
+    public static Result success(String message) {
+        return new Result(true, message, null);
+    }
+
     public static Result success(Object data, String message) {
         return new Result(true, message, data);
     }

@@ -1,7 +1,12 @@
 package top.codecrab.chat.service;
 
+import top.codecrab.chat.common.Result;
 import top.codecrab.chat.entity.FriendReq;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.codecrab.chat.entity.User;
+import top.codecrab.chat.vo.AccountProfile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +18,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface FriendReqService extends IService<FriendReq> {
 
+    Result sendRequest(FriendReq friendReq);
+
+    List<AccountProfile> findFriendReqByUserid(String userid);
+
+    Result ignoreFriendReq(String reqid);
+
+    Result acceptFriendReq(String reqid);
+
+    List<User> findFriendByUserid(String userid);
 }

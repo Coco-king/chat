@@ -1,7 +1,7 @@
 package top.codecrab.chat.service;
 
-import top.codecrab.chat.entity.ChatRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.codecrab.chat.entity.ChatRecord;
 
 /**
  * <p>

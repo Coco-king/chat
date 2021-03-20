@@ -1,7 +1,7 @@
 package top.codecrab.chat.utils;
 
 import cn.hutool.core.map.MapUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSONUtil;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +38,6 @@ public class CommonUtils {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response =
                 restTemplate.exchange(URI.create(url), HttpMethod.GET, new HttpEntity<>(null), String.class);
-        return MapUtil.getStr(JSON.parseObject(response.getBody(), Map.class), "hitokoto");
+        return MapUtil.getStr(JSONUtil.toBean(response.getBody(), Map.class), "hitokoto");
     }
 }

@@ -1,17 +1,15 @@
 package top.codecrab.chat.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.time.LocalDate;
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -32,6 +30,7 @@ public class User implements Serializable {
     /**
      * ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
@@ -78,7 +77,7 @@ public class User implements Serializable {
     /**
      * 注册日期
      */
-    private LocalDate createtime;
+    private LocalDateTime createtime;
 
     /**
      * 绑定手机

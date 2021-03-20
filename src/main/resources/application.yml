@@ -17,7 +17,7 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 chat:
   upload:
-    file-path: ${user.dir}/upload
+    file-path: ${user.dir}/upload/
 #整合FastDfs
 fdfs:
   soTimeout: 1501
@@ -26,6 +26,8 @@ fdfs:
   thumbImage.width: 150
   thumbImage.height: 150
   #TrackerList参数,支持多个
-  trackerList: 192.168.25.135:22122
+  trackerList: 192.168.43.206:22122
   #HTTP URL
-  httpurl: http://192.168.25.135/
+  http-url: http://192.168.43.206:8888/
+  # 缩略图后缀
+  suffix: _150x150

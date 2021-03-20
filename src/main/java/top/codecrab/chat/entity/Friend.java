@@ -1,11 +1,16 @@
 package top.codecrab.chat.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDate;
-import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,11 +23,14 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("tb_friend")
 public class Friend implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
@@ -43,7 +51,7 @@ public class Friend implements Serializable {
     /**
      * 添加好友日期
      */
-    private LocalDate createtime;
+    private LocalDateTime createtime;
 
 
 }
