@@ -1,0 +1,31 @@
+server:
+  port: 9000
+  netty:
+    port: 9001
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+  application:
+    name: chat
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/netty-chat?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+chat:
+  upload:
+    file-path: ${user.dir}/upload
+#整合FastDfs
+fdfs:
+  soTimeout: 1501
+  connectTimeout: 601
+  #缩略图生成参数
+  thumbImage.width: 150
+  thumbImage.height: 150
+  #TrackerList参数,支持多个
+  trackerList: 192.168.25.135:22122
+  #HTTP URL
+  httpurl: http://192.168.25.135/
