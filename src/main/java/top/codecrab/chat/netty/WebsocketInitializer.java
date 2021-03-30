@@ -34,6 +34,13 @@ public class WebsocketInitializer extends ChannelInitializer<SocketChannel> {
         // 对于websocket来讲，都是以frames进行传输的，不同的数据类型对应的frames也不同
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 
+        //添加Netty空闲机制检查
+        //第1个参数：读空闲超时时间 2：写空闲 3：读写空闲
+        pipeline.addLast(new IdleStateHandler(4, 8, 12));
+
+        //添加空闲后的操作
+        pipeline.addLast(new HeartBeatHandler());
+
         // 添加自定义的handler
         pipeline.addLast(new ChatHandler());
 

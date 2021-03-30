@@ -1,0 +1,56 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: chat-mysql
+    ports:
+      - 33061:3306
+    environment: # 指定用户root的密码
+      - MYSQL_ROOT_PASSWORD=WangXX666..666
+  fastdfs-tracker:
+    hostname: fastdfs-tracker
+    container_name: fastdfs-tracker
+    image: season/fastdfs:1.2
+    network_mode: "host"
+    command: tracker
+    volumes:
+      - ./tracker_data:/fastdfs/tracker/data
+  fastdfs-storage:
+    hostname: fastdfs-storage
+    container_name: fastdfs-storage
+    image: season/fastdfs:1.2
+    network_mode: "host"
+    ports:
+      - 22121:22122
+    volumes:
+      - ./storage_data:/fastdfs/storage/data
+      - ./store_path:/fastdfs/store_path
+    environment:
+      - TRACKER_SERVER=121.196.172.171:22121
+    command: storage
+    depends_on:
+      - fastdfs-tracker
+  fastdfs-nginx:
+    hostname: fastdfs-nginx
+    container_name: fastdfs-nginx
+    image: season/fastdfs:1.2
+    network_mode: "host"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf/nginx.conf
+      - ./store_path:/fastdfs/store_path
+    environment:
+      - TRACKER_SERVER=121.196.172.171:22121
+    command: nginx
+  chat:
+    image: chat:latest
+    build: . # 表示以当前目录下的Dockerfile开始构建镜像
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - ./upload:/upload
+    depends_on: # 依赖与mysql、redis，其实可以不填，默认已经表示可以
+      - mysql
+      - fastdfs-tracker
+      - fastdfs-storage
+      - fastdfs-nginx

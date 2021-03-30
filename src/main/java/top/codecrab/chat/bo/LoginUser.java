@@ -1,5 +1,7 @@
 package top.codecrab.chat.bo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -8,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginUser {
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**

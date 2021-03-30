@@ -2,7 +2,8 @@ package top.codecrab.chat.netty;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONUtil;
+import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -28,18 +29,18 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
      */
     @Override
     protected void channelRead0(ChannelHandlerContext context, TextWebSocketFrame textWebSocketFrame) throws Exception {
+        ObjectMapper objectMapper = SpringUtil.getBean(ObjectMapper.class);
+        ChatRecordService recordService = SpringUtil.getBean(ChatRecordService.class);
         //获取消息
         String text = textWebSocketFrame.text();
-        log.info("接受到的消息为：{}", text);
 
-        Message message = JSONUtil.toBean(text, Message.class);
+        Message message = objectMapper.readValue(text, Message.class);
         switch (message.getType()) {
             case 0:
                 UserChannelMap.put(message.getChatRecord().getUserid(), context.channel());
                 UserChannelMap.print();
                 break;
             case 1:
-                ChatRecordService recordService = SpringUtil.getBean(ChatRecordService.class);
                 ChatRecord chatRecord = message.getChatRecord();
                 chatRecord.setHasRead(0);
                 chatRecord.setHasDelete(0);
@@ -50,11 +51,20 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                 Channel channel = UserChannelMap.get(chatRecord.getFriendid());
                 if (channel != null) {
                     //朋友在线
-                    channel.writeAndFlush(new TextWebSocketFrame(JSONUtil.toJsonStr(message)));
+                    String asString = objectMapper.writeValueAsString(message);
+                    channel.writeAndFlush(new TextWebSocketFrame(asString));
                 } else {
                     //朋友不在线
                     log.info("朋友不在线 ID：{}", chatRecord.getFriendid());
                 }
+                break;
+            case 2:
+                ChatRecord record = recordService.getById(message.getChatRecord().getId());
+                record.setHasRead(1);
+                recordService.updateById(record);
+                break;
+            case 3:
+                log.info("接收到心跳 ==> {}", text);
                 break;
         }
 

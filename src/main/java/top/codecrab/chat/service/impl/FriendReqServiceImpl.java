@@ -119,7 +119,6 @@ public class FriendReqServiceImpl extends ServiceImpl<FriendReqMapper, FriendReq
         if (req == null) return Result.fail("该请求已拒绝或不存在");
         req.setStatus(1);
         this.updateById(req);
-        System.out.println(LocalDateTime.now());
 
         //添加Friend关系，双方都需要添加
         List<Friend> friends = Arrays.asList(
@@ -141,6 +140,6 @@ public class FriendReqServiceImpl extends ServiceImpl<FriendReqMapper, FriendReq
         if (CollectionUtil.isEmpty(friends)) return new ArrayList<>();
 
         List<String> userIds = friends.stream().map(Friend::getFriendsId).collect(Collectors.toList());
-        return (List<User>) userService.listByIds(userIds);
+        return new ArrayList<>(userService.listByIds(userIds));
     }
 }

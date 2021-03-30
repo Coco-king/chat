@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.codecrab.chat.bo.LoginUser;
 import top.codecrab.chat.common.Result;
+import top.codecrab.chat.entity.TestClass;
 import top.codecrab.chat.entity.User;
 import top.codecrab.chat.utils.ValidationUtil;
 import top.codecrab.chat.vo.AccountProfile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,6 +25,11 @@ import top.codecrab.chat.vo.AccountProfile;
 @RestController
 @RequestMapping("/user")
 public class UserController extends BaseController {
+
+    @RequestMapping("/test")
+    public TestClass test(@RequestBody TestClass testClass) {
+        return testClass;
+    }
 
     @PostMapping("/register")
     public Result register(@RequestBody LoginUser loginUser) {

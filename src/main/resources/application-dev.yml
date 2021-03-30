@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/netty-chat?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+#整合FastDfs
+fdfs:
+  soTimeout: 1501
+  connectTimeout: 601
+  #缩略图生成参数
+  thumbImage.width: 150
+  thumbImage.height: 150
+  #TrackerList参数,支持多个
+  trackerList: 192.168.43.206:22122
+  #HTTP URL
+  http-url: http://192.168.43.206:8888/
+  # 缩略图后缀
+  suffix: _150x150
